@@ -1,6 +1,8 @@
 import apisauce from "apisauce";
 import { asyncLocalStorage } from "./LocalStorage";
 import { ApiResponse } from "../Models";
+import { AxiosRequestConfig } from "axios";
+import { format } from "date-fns";
 
 const url = {
   baseUrl: "https://jsonplaceholder.typicode.com",
@@ -9,6 +11,16 @@ const url = {
 const api = apisauce.create({
   baseURL: url.baseUrl,
   timeout: 3000,
+});
+
+api.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+  console.log(
+    `${format(
+      new Date(),
+      "dd/MM/yyy"
+    )} Response: ${config.method?.toUpperCase()} ${config.url}`
+  );
+  return config;
 });
 
 const getUserToken = async (): Promise<string> => {

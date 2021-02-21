@@ -1,7 +1,11 @@
-import { createReducer, createSlice } from "@reduxjs/toolkit";
+import { createReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { stat } from "node:fs";
 
-const authState = {
+interface IAuthState {
+  token: string;
+}
+
+const authState: IAuthState = {
   token: "",
 };
 
@@ -9,14 +13,14 @@ const authSlice = createSlice({
   name: "auth",
   initialState: authState,
   reducers: {
-    login: (state, action) => {
+    login: (state: IAuthState, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
-    logout: (state, action) => {
-      state.token = action.payload;
+    logout: (state: IAuthState, action: PayloadAction<void>) => {
+      state.token = "";
     },
   },
 });
 
 export const authReducer = authSlice.reducer;
-export const { login, logout } = authSlice.actions;
+export const { logout, login } = authSlice.actions;

@@ -1,10 +1,21 @@
 import React from "react";
+import { HomePage, ItemPage, NotFound } from "./pages";
 
-interface Route {
+export interface Route {
   path: string;
   name: string;
-  icon: string;
-  component: React.Component;
+  component: () => JSX.Element;
 }
 
-export const routes: Route[] = [];
+export const routes: Route[] = [
+  {
+    path: "/",
+    name: "Home",
+    component: HomePage,
+  },
+  {
+    path: "/items",
+    name: "Items",
+    component: ItemPage,
+  },
+];

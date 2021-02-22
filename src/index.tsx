@@ -24,7 +24,7 @@ import reportWebVitals from "./reportWebVitals";
 
 const hist = createBrowserHistory();
 
-ReactDOM.hydrate(
+ReactDOM.render(
   <Provider store={store}>
     <HelmetProvider>
       <Helmet>
@@ -32,8 +32,8 @@ ReactDOM.hydrate(
       </Helmet>
       <Router history={hist}>
         <Switch>
-          <Route path="/" exact component={EcommerceLayout} />
           <Route path="/login" component={Login} />
+          <Route path="/" component={EcommerceLayout} />
           <Route path="*" exact component={NotFound} />
         </Switch>
       </Router>

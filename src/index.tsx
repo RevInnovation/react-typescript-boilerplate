@@ -7,7 +7,8 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 
 // State Management
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { persistor, store } from "./@redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 // pages
 import { Login, NotFound } from "./pages";
@@ -16,7 +17,7 @@ import { Login, NotFound } from "./pages";
 import { createBrowserHistory } from "history";
 
 // Core Pages
-import { Redirect, Route, Router, Switch } from "react-router";
+import { Route, Router, Switch } from "react-router";
 import { EcommerceLayout } from "./Layout/ECommerce";
 
 // Web Performance Measure
@@ -26,18 +27,20 @@ const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <HelmetProvider>
-      <Helmet>
-        <title>App Title Boilerplate</title>
-      </Helmet>
-      <Router history={hist}>
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/" component={EcommerceLayout} />
-          <Route path="*" exact component={NotFound} />
-        </Switch>
-      </Router>
-    </HelmetProvider>
+    <PersistGate loading={null} persistor={persistor}>
+      <HelmetProvider>
+        <Helmet>
+          <title>App Title Boilerplate</title>
+        </Helmet>
+        <Router history={hist}>
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/" component={EcommerceLayout} />
+            <Route path="*" exact component={NotFound} />
+          </Switch>
+        </Router>
+      </HelmetProvider>
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );
